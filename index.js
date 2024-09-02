@@ -233,7 +233,19 @@ function animate() {
       width: enemy.health + '%'
     })
   }
-
+  // make it so player cannot go outside of the map
+  if (player.position.x >= 950) {
+    player.velocity.x = -5
+  }
+  if (player.position.x <= 10) {
+    player.velocity.x = 5
+  }
+  if (enemy.position.x >= 950) {
+    enemy.velocity.x = -5
+  }
+  if (enemy.position.x <= 10) {
+    enemy.velocity.x = 5
+  }
   // if player misses
   if (player.isAttacking && player.framesCurrent === 4) {
     player.isAttacking = false
