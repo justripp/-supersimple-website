@@ -1,5 +1,6 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
+var jumpHeight = -20
 
 canvas.width = 1024
 canvas.height = 576
@@ -199,6 +200,8 @@ function animate() {
     player.switchSprite('fall')
   }
 
+
+
   // Enemy movement
   if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
     enemy.velocity.x = -5
@@ -246,6 +249,10 @@ function animate() {
   if (enemy.position.x <= 10) {
     enemy.velocity.x = 5
   }
+ 
+  
+ 
+
   // if player misses
   if (player.isAttacking && player.framesCurrent === 4) {
     player.isAttacking = false
@@ -281,6 +288,13 @@ function animate() {
 
 animate()
 
+// delay between jumps
+let jumpCooldown = false; 
+let enemyJumpCooldown = false;
+// Delay time in milliseconds 
+const jumpCooldownTime = 400; 
+const enemyJumpCooldownTime = 400;
+
 window.addEventListener('keydown', (event) => {
   if (!player.dead) {
     switch (event.key) {
@@ -292,9 +306,17 @@ window.addEventListener('keydown', (event) => {
         keys.a.pressed = true
         player.lastKey = 'a'
         break
-      case 'w':
-        player.velocity.y = -20
-        break
+        case 'w':
+          // Check if the character is not in a cooldown state
+          if (!jumpCooldown) { 
+            player.velocity.y = -20
+            jumpCooldown = true;
+            setTimeout(() => {
+              // After the specified time, disable the cooldown
+              jumpCooldown = false; 
+            }, jumpCooldownTime);
+          }
+          break
       case ' ':
         player.attack()
         break
@@ -312,7 +334,15 @@ window.addEventListener('keydown', (event) => {
         enemy.lastKey = 'ArrowLeft'
         break
       case 'ArrowUp':
-        enemy.velocity.y = -20
+        // Check if the enemy is not in a cooldown state
+        if (!enemyJumpCooldown) { 
+          enemy.velocity.y = -20
+          enemyJumpCooldown = true;
+          setTimeout(() => {
+            // After the specified time, disable the cooldown
+            enemyJumpCooldown = false; 
+          }, enemyJumpCooldownTime);
+        }
         break
       case 'ArrowDown':
         enemy.attack()
