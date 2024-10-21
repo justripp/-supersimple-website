@@ -148,7 +148,7 @@ class Fighter extends Sprite {
     // overriding all other animations with the attack animation
     if (
       this.image === this.sprites.attack1.image &&
-      this.framesCurrent < this.sprites.attack1.framesMax - 1 && this.image ~= this.sprites.death.image
+      this.framesCurrent < this.sprites.attack1.framesMax - 1 && this.image != this.sprites.death.image
     )
       return
 
