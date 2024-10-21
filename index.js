@@ -292,8 +292,8 @@ animate()
 let jumpCooldown = false; 
 let enemyJumpCooldown = false;
 // Delay time in milliseconds 
-const jumpCooldownTime = 400; 
-const enemyJumpCooldownTime = 400;
+const jumpCooldownTime = 700; 
+const enemyJumpCooldownTime = 700;
 
 window.addEventListener('keydown', (event) => {
   if (!player.dead) {
